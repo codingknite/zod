@@ -14,11 +14,12 @@ import {
   ScrollView,
 } from 'react-native';
 import NewsItem from '../../components/NewsItem';
+import SearchBar from '../../components/SearchBar';
 
 const Home = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <View style={styles.searchBarWrapper}>
           <TextInput
             style={styles.searchBar}
@@ -32,7 +33,8 @@ const Home = () => {
             />
           </View>
         </View>
-      </View>
+      </View> */}
+      <SearchBar />
 
       <ImageBackground
         source={require('../../assets/images/home2.webp')}

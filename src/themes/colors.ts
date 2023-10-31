@@ -9,4 +9,8 @@ export const colors = {
     light: '#fff',
     medium: '#f8f9fa',
   },
+  black: {
+    light: '#1A1E24',
+    dark: '#100F0F',
+  },
 };
