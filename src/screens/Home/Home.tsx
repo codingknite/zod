@@ -3,7 +3,7 @@ import styles from './styles';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {testNews} from '../../assets/data';
+import {testNews} from '../../assets/data/news';
 import {colors} from '../../themes/colors';
 import {
   View,
