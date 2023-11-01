@@ -12,19 +12,29 @@ import {
   TextInput,
   Image,
   ScrollView,
+  Pressable,
 } from 'react-native';
 import NewsItem from '../../components/NewsItem';
-import SearchBar from '../../components/SearchBar';
+import {useNavigation} from '@react-navigation/native';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Home = () => {
+  const navigation = useNavigation();
+
+  const navigateToSearch = () => {
+    navigation.navigate('Search');
+  };
+
   return (
     <View style={styles.container}>
-      {/* <View style={styles.searchContainer}>
+      <View style={styles.searchContainer}>
         <View style={styles.searchBarWrapper}>
           <TextInput
+            onPressIn={navigateToSearch}
             style={styles.searchBar}
             placeholder="Search or enter trasaction id"
             placeholderTextColor={colors.white.medium}
+            autoFocus={false}
           />
           <View style={styles.logoContainer}>
             <Image
@@ -33,8 +43,7 @@ const Home = () => {
             />
           </View>
         </View>
-      </View> */}
-      <SearchBar />
+      </View>
 
       <ImageBackground
         source={require('../../assets/images/home2.webp')}
@@ -56,23 +65,23 @@ const Home = () => {
 
               <View style={styles.shortcutItem}>
                 <View style={styles.shortCutIcon}>
-                  <EntypoIcon name="upload" size={25} />
-                </View>
-                <Text style={styles.shortcutItemText}>Transactions</Text>
-              </View>
-
-              <View style={styles.shortcutItem}>
-                <View style={styles.shortCutIcon}>
-                  <EntypoIcon name="tablet-mobile-combo" size={25} />
-                </View>
-                <Text style={styles.shortcutItemText}>Recent Tabs</Text>
-              </View>
-
-              <View style={styles.shortcutItem}>
-                <View style={styles.shortCutIcon}>
                   <EntypoIcon name="back-in-time" size={25} />
                 </View>
                 <Text style={styles.shortcutItemText}>History</Text>
+              </View>
+
+              <View style={styles.shortcutItem}>
+                <View style={styles.shortCutIcon}>
+                  <EntypoIcon name="upload" size={25} />
+                </View>
+                <Text style={styles.shortcutItemText}>Public Uploads</Text>
+              </View>
+
+              <View style={styles.shortcutItem}>
+                <View style={styles.shortCutIcon}>
+                  <MaterialCommunityIcon name="account" size={25} />
+                </View>
+                <Text style={styles.shortcutItemText}>Profile</Text>
               </View>
             </View>
           </View>
@@ -94,7 +103,12 @@ const Home = () => {
       <View style={styles.bottomNav}>
         <Ionicon name="caret-back" size={25} color={colors.white.light} />
         <Ionicon name="caret-forward" size={25} color={colors.white.light} />
-        <Ionicon name="search-outline" size={25} color={colors.white.light} />
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Search');
+          }}>
+          <Ionicon name="search-outline" size={25} color={colors.white.light} />
+        </Pressable>
         <MaterialIcon
           name="all-inclusive-box-outline"
           size={25}
@@ -111,3 +125,6 @@ const Home = () => {
 };
 
 export default Home;
+
+// todo convert textinput to text
+// this is because this is not where we are recording user input

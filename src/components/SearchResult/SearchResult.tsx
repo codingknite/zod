@@ -1,16 +1,20 @@
 import React from 'react';
+import styles from './styles';
 import FontistoIcon from 'react-native-vector-icons/Fontisto';
-import {View, Text, Pressable, StyleSheet, ScrollView} from 'react-native';
-import {colors} from '../../themes/colors';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import {View, Text, Pressable, ScrollView} from 'react-native';
 
-const SearchResult = () => {
+interface Props {
+  category: 'google' | 'permaweb' | 'images' | 'videos' | 'documents';
+}
+
+const SearchResult = ({category}: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.resultHeader}>
         <View style={styles.resultInfo}>
           <View style={styles.resultIcon}>
-            <FontistoIcon name="world-o" color="#fff" size={24} />
+            <FontistoIcon name="world-o" color="#fff" size={22} />
           </View>
 
           <View style={styles.resultAddress}>
@@ -22,8 +26,18 @@ const SearchResult = () => {
         </View>
 
         <Pressable style={styles.stamps}>
-          <FontAwesomeIcon name="stamp" size={16} style={styles.stampIcon} />
-          <Text style={styles.stampText}>Stamp</Text>
+          {category === 'google' ? (
+            <FontAwesomeIcon
+              name="file-upload"
+              size={16}
+              style={styles.stampIcon}
+            />
+          ) : (
+            <FontAwesomeIcon name="stamp" size={16} style={styles.stampIcon} />
+          )}
+          <Text style={styles.stampText}>
+            {category === 'google' ? 'Upload' : 'Stamp'}
+          </Text>
         </Pressable>
       </View>
 
@@ -56,82 +70,5 @@ const SearchResult = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 12,
-    backgroundColor: '#343a40',
-    marginBottom: 7,
-  },
-  resultHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 15,
-  },
-  resultInfo: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  resultIcon: {
-    padding: 6,
-    borderRadius: 25,
-    backgroundColor: colors.gray.dark,
-  },
-  resultAddress: {
-    gap: 4,
-  },
-  addressName: {
-    fontSize: 16,
-    color: '#dee2e6',
-  },
-  address: {
-    width: 220,
-    fontSize: 13,
-    color: '#ced4da',
-  },
-  stamps: {
-    padding: 8,
-    borderRadius: 5,
-    flexDirection: 'row',
-    backgroundColor: colors.primary,
-    gap: 6,
-    alignItems: 'center',
-  },
-  stampIcon: {},
-  stampText: {
-    fontSize: 14.5,
-    fontWeight: '600',
-    color: colors.black.dark,
-  },
-  resultText: {
-    fontSize: 22,
-    marginBottom: 5,
-    fontWeight: '500',
-    color: '#64b5f6',
-  },
-  resultDescription: {
-    color: colors.white.light,
-    fontSize: 14.5,
-    fontWeight: '400',
-    paddingVertical: 5,
-  },
-  tagsContainer: {
-    padding: 10,
-    marginTop: 10,
-  },
-  tag: {
-    marginRight: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#ced4da',
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#baebff',
-  },
-});
 
 export default SearchResult;

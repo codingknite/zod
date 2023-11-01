@@ -36,8 +36,7 @@ const styles = StyleSheet.create({
   headlineText: {
     padding: 10,
     fontSize: 22,
-    lineHeight: 30,
-    fontWeight: '600',
+    fontWeight: '700',
     color: colors.white.light,
   },
   date: {
