@@ -1,17 +1,28 @@
 import React from 'react';
-import {colors} from '../../themes/colors';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  Text,
-  Image,
-  TextInput,
-} from 'react-native';
+import styles from './styles';
 import SearchBar from '../../components/SearchBar';
+import VideoResult from './components/VideoResult';
+import ImageResults from './components/ImageResults';
+import SearchResult from '../../components/SearchResult';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {colors} from '../../themes/colors';
+import {View, ScrollView, Text, Image, TextInput} from 'react-native';
+
+const GoogleResults = () => {
+  return (
+    <>
+      <SearchResult />
+      <SearchResult />
+      <SearchResult />
+      <SearchResult />
+      <SearchResult />
+      <SearchResult />
+      <SearchResult />
+    </>
+  );
+};
 
 const SearchResults = () => {
   return (
@@ -19,22 +30,35 @@ const SearchResults = () => {
       <SearchBar />
 
       <ScrollView style={styles.contentArea}>
-        <View>
-          <Image source={require('../../assets/images/logo.png')} />
-          <Text>Zod</Text>
-          <IonIcon name="person-circle" color={colors.white.light} size={36} />
+        <View style={styles.headerSection}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.zodText}>ZOD</Text>
+          <IonIcon name="person-circle" color={colors.white.light} size={35} />
         </View>
 
-        <TextInput value="hello world" />
+        <TextInput value="Search Bar" style={styles.searchBar} />
+        <IonIcon
+          name="search-outline"
+          size={24}
+          color="#fff"
+          style={styles.searchIcon}
+        />
 
-        <View>
-          <Text>All</Text>
-          <Text>Images</Text>
-          <Text>Videos</Text>
-          <Text>Document</Text>
+        <View style={styles.resultCategories}>
+          <View style={styles.categoryWrapper}>
+            <Text style={styles.categoryActive}>Google</Text>
+          </View>
+
+          <Text style={styles.categoryText}>Permaweb</Text>
+          <Text style={styles.categoryText}>Images</Text>
+          <Text style={styles.categoryText}>Videos</Text>
+          <Text style={styles.categoryText}>Documents</Text>
         </View>
 
-        <View>{/* SEARCH RESULT VIEW ITEM  */}</View>
+        <GoogleResults />
       </ScrollView>
 
       <View style={styles.bottomNav}>
@@ -42,7 +66,7 @@ const SearchResults = () => {
         <IonIcon name="caret-forward" size={25} color={colors.white.light} />
         <IonIcon name="search-outline" size={25} color={colors.white.light} />
         <MaterialIcon
-          name="all-inclusive-box-outline"
+          name="all-inclusive-box"
           size={25}
           color={colors.white.light}
         />
@@ -55,25 +79,5 @@ const SearchResults = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 50,
-    justifyContent: 'space-between',
-    backgroundColor: colors.gray.light,
-  },
-  contentArea: {
-    backgroundColor: colors.gray.dark,
-  },
-  bottomNav: {
-    flexDirection: 'row',
-    paddingHorizontal: 35,
-    backgroundColor: colors.gray.light,
-    justifyContent: 'space-between',
-    paddingBottom: 40,
-    paddingTop: 10,
-  },
-});
 
 export default SearchResults;
