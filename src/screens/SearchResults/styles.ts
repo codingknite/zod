@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   contentArea: {
-    backgroundColor: colors.gray.dark,
+    backgroundColor: colors.black.secondary,
   },
   headerSection: {
     flexDirection: 'row',
@@ -53,10 +53,11 @@ const styles = StyleSheet.create({
     left: 23,
   },
   resultCategories: {
-    marginTop: 15,
-    flexDirection: 'row',
     gap: 12,
     padding: 10,
+    marginTop: 15,
+    marginBottom: 10,
+    flexDirection: 'row',
     paddingHorizontal: 12,
   },
   categoryText: {
@@ -69,6 +70,10 @@ const styles = StyleSheet.create({
   categoryWrapper: {
     borderBottomWidth: 2,
     borderColor: '#fff',
+  },
+  testOverlap: {
+    backgroundColor: 'orangered',
+    height: '90%',
   },
 });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import loginStyles from '../Login/styles';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import {useNavigation} from '@react-navigation/native';
 import {
   View,
   Text,
@@ -13,11 +14,15 @@ import {
 import {colors} from '../../themes/colors';
 
 const Signup = () => {
+  const navigation = useNavigation();
+
   return (
     <SafeAreaView style={loginStyles.mainContainer}>
       <View style={loginStyles.loginContainer}>
         <View style={loginStyles.loginHeader}>
-          <AntIcon name="arrowleft" size={26} color={colors.white.medium} />
+          <Pressable onPress={() => navigation.navigate('Onboard')}>
+            <AntIcon name="arrowleft" size={26} color={colors.white.medium} />
+          </Pressable>
           <Text style={loginStyles.loginText}>Signup</Text>
           <View />
         </View>
@@ -87,7 +92,7 @@ const Signup = () => {
 const styles = StyleSheet.create({
   formInput: {
     ...loginStyles.formInput,
-    fontSize: 17,
+    fontSize: 16,
   },
   personIcon: {
     position: 'absolute',

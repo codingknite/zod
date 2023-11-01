@@ -33,6 +33,30 @@ const ImageResults = () => {
         source={require('../../../assets/images/home7.webp')}
         style={styles.imageResultItem}
       />
+      <Image
+        source={require('../../../assets/images/home8.webp')}
+        style={styles.imageResultItem}
+      />
+      <Image
+        source={require('../../../assets/images/home1.webp')}
+        style={styles.imageResultItem}
+      />
+      <Image
+        source={require('../../../assets/images/home2.webp')}
+        style={styles.imageResultItem}
+      />
+      <Image
+        source={require('../../../assets/images/home3.webp')}
+        style={styles.imageResultItem}
+      />
+      <Image
+        source={require('../../../assets/images/home4.webp')}
+        style={styles.imageResultItem}
+      />
+      <Image
+        source={require('../../../assets/images/home5.webp')}
+        style={styles.imageResultItem}
+      />
     </View>
   );
 };
