@@ -1,5 +1,8 @@
 export const colors = {
-  blue: 'abc4ff',
+  blue: {
+    light: '#abc4ff',
+    medium: '#246bee',
+  },
   primary: '#FB6739',
   gray: {
     light: '#495057',
@@ -12,5 +15,8 @@ export const colors = {
   black: {
     light: '#1A1E24',
     dark: '#100F0F',
+    onboardScreen: '#0D0F13',
+    secondary: '#1A1E24',
   },
+  textGray: '#ced4da',
 };

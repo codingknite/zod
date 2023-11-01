@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    backgroundColor: colors.gray.dark,
+    backgroundColor: colors.black.onboardScreen,
   },
   loginContainer: {
     paddingVertical: 12,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   emailText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '600',
     paddingVertical: 5,
     color: colors.white.medium,
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     left: 15,
   },
   passwordText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '600',
     marginTop: 12,
     paddingBottom: 5,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   loginButtonText: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: '700',
     color: colors.white.light,
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   continueWithText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '600',
     textAlign: 'center',
     color: '#adb5bd',
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray.light,
   },
   googleAuthText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '600',
     color: colors.white.light,
   },

@@ -3,16 +3,26 @@ import styles from './styles';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {colors} from '../../themes/colors';
+import {useNavigation} from '@react-navigation/native';
 import {View, Text, TextInput, Pressable, SafeAreaView} from 'react-native';
 
 // todo set email address value to lowercase
 
 const Login = () => {
+  const navigation = useNavigation();
+
+  const handleLogin = () => {
+    // todo: this is a temporary workaround
+    navigation.navigate('Home');
+  };
+
   return (
     <SafeAreaView style={styles.mainContainer}>
       <View style={styles.loginContainer}>
         <View style={styles.loginHeader}>
-          <AntIcon name="arrowleft" size={26} color={colors.white.light} />
+          <Pressable onPress={() => navigation.navigate('Onboard')}>
+            <AntIcon name="arrowleft" size={26} color={colors.white.medium} />
+          </Pressable>
           <Text style={styles.loginText}>Login</Text>
           <View />
         </View>
@@ -48,7 +58,7 @@ const Login = () => {
           />
         </View>
 
-        <Pressable style={styles.loginButton}>
+        <Pressable style={styles.loginButton} onPress={handleLogin}>
           <Text style={styles.loginButtonText}>Login</Text>
         </Pressable>
       </View>
@@ -65,3 +75,5 @@ const Login = () => {
 };
 
 export default Login;
+
+// todo: implement authentication with continue button

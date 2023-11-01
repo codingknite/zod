@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: colors.gray.dark,
+    backgroundColor: colors.black.onboardScreen,
   },
   searchBar: {
     padding: 11,
