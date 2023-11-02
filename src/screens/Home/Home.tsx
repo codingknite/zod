@@ -1,9 +1,9 @@
-import React from 'react';
+import axios, {AxiosResponse} from 'axios';
 import styles from './styles';
+import React, {useEffect, useState} from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {testNews} from '../../assets/data/news';
 import {colors} from '../../themes/colors';
 import {
   View,
@@ -13,13 +13,67 @@ import {
   Image,
   ScrollView,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import NewsItem from '../../components/NewsItem';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+type NewsItem = {
+  creator: string;
+  title: string;
+  link: string;
+  pubDate: string;
+  'dc:creator': string;
+  content: string;
+  contentSnippet: string;
+  guid: string;
+  categories: string[];
+  isoDate: string;
+};
+
+interface FeedApiResponse {
+  message: string;
+  feed: Array<NewsItem>;
+}
+
 const Home = () => {
   const navigation = useNavigation();
+  const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
+  const [loadingFeed, setLoadingFeed] = useState(false);
+
+  // get news feed
+  useEffect(() => {
+    fetchNewsFeed();
+  }, []);
+
+  const fetchNewsFeed = async () => {
+    setLoadingFeed(true);
+    try {
+      const response: AxiosResponse<FeedApiResponse> = await axios.get(
+        'http://localhost:3000/api/news-feed',
+      );
+      const feedData = response.data;
+
+      if (feedData.message === 'SUCCESSFUL') {
+        setNewsFeed(feedData.feed);
+        setLoadingFeed(false);
+      }
+    } catch (error) {
+      setLoadingFeed(false);
+    }
+  };
+
+  const extractImageLink = (htmlContent: string) => {
+    const imgTagRegex = /<img[^>]+src="?([^"\s]+)"?\s*\/>/;
+    const match = htmlContent.match(imgTagRegex);
+
+    if (match && match[1]) {
+      return match[1];
+    } else {
+      return null;
+    }
+  };
 
   const navigateToSearch = () => {
     navigation.navigate('Search');
@@ -89,13 +143,23 @@ const Home = () => {
           <View style={styles.newsContainer}>
             <Text style={styles.newsText}>Permaweb News</Text>
 
-            {testNews.map(item => (
-              <NewsItem
-                key={item.id}
-                headline={item.headline}
-                date={item.date}
-              />
-            ))}
+            {loadingFeed ? (
+              <View style={styles.loadingContainer}>
+                <ActivityIndicator size="small" color={colors.white.light} />
+              </View>
+            ) : (
+              <>
+                {newsFeed.map((item, index) => (
+                  <NewsItem
+                    key={index}
+                    link={item.link}
+                    date={item.isoDate}
+                    headline={item.title}
+                    imageSource={extractImageLink(item.content)}
+                  />
+                ))}
+              </>
+            )}
           </View>
         </ScrollView>
       </ImageBackground>
