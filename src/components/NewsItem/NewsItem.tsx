@@ -1,31 +1,45 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {Text, Image, StyleSheet, Pressable} from 'react-native';
 import {colors} from '../../themes/colors';
+import {format} from 'date-fns';
+import {useNavigation} from '@react-navigation/native';
 
 interface Props {
-  imageSource?: string;
+  imageSource: string | null;
   headline: string;
   date: string;
+  link: string;
 }
-const NewsItem = ({headline, date}: Props) => {
+const NewsItem = ({headline, date, imageSource, link}: Props) => {
+  const navigation = useNavigation();
+
+  const openArticle = () => {
+    navigation.navigate('Webview', {
+      link,
+    });
+  };
+
   return (
-    <View style={styles.container}>
-      {/* most likely to be a uri */}
+    <Pressable style={styles.container} onPress={openArticle}>
       <Image
-        source={require('../../assets/images/news.webp')}
+        source={{
+          uri: imageSource
+            ? imageSource
+            : 'https://logowik.com/content/uploads/images/arweave-ar7674.jpg',
+        }}
         style={styles.articleImage}
         resizeMode="cover"
       />
       <Text style={styles.headlineText}>{headline}</Text>
-      <Text style={styles.date}>{date}</Text>
-    </View>
+      <Text style={styles.date}>{format(new Date(date), 'LLLL dd, yyyy')}</Text>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     marginBottom: 65,
-    backgroundColor: '#ffffff1b',
+    backgroundColor: '#000000a9',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
