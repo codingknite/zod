@@ -88,7 +88,9 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '90%',
     alignSelf: 'center',
-    // backgroundColor: 'orangered',
+  },
+  loadingContainer: {
+    paddingVertical: 25,
   },
   newsText: {
     padding: 12,
@@ -109,6 +111,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 40,
     paddingTop: 10,
+  },
+  testingWebView: {
+    height: '85%',
+  },
+  webview: {
+    flex: 1,
   },
 });
 
