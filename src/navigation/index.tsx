@@ -7,6 +7,17 @@ import Signup from '../screens/Signup';
 import Search from '../screens/Search';
 import SearchResults from '../screens/SearchResults';
 import Onboard from '../screens/Onboard';
+import Webview from '../screens/WebView/WebView';
+
+type RootStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Signup: undefined;
+  Search: undefined;
+  Onboard: undefined;
+  Webview: {link: string};
+  SearchResults: undefined;
+};
 
 const Stack = createNativeStackNavigator();
 
@@ -15,12 +26,13 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Onboard">
+        initialRouteName="Home">
         <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Search" component={Search} />
+        <Stack.Screen name="Webview" component={Webview} />
         <Stack.Screen name="SearchResults" component={SearchResults} />
       </Stack.Navigator>
     </NavigationContainer>
