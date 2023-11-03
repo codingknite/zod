@@ -1,0 +1,77 @@
+SCREENS
+
+-- not logged in screen -> ask user to login or signup ✅
+
+-- screen to view user profile ✅
+  -- view name, wallet address, balance and transactions ✅
+
+-- menu or settings page
+  -- just styling (take from profile component)
+
+-- history screen
+  -- just styling (take from profile component)
+
+-- bookmarks screen
+  -- just styling (take from history component)
+
+-- screen to view videos only
+  -- this is solely for the udl renderer
+  -- enter transaction and get video
+  -- click on video to watch -> based on license
+
+-- screen to view images only
+  -- enter a query and only bring up images
+  -- show some info about the image
+  -- screen for the user to see an image if they click on it
+
+-- screen to view all transactions (uploads) -- todo 👉 last item
+
+-- screen to view all tabs -- todo 👉 last item
+
+
+FIXES
+
+-- image with in image component -> SearchResults
+
+ROADMAP
+
+-- BUILD MENU, HISTORY AND BOOKMARKS AND PUBLIC UPLOADS COMPONENTS
+
+-- IMPLEMENT AUTHENTICATION
+
+-- IMPLEMENT PERMAWEB NEWS (fetch and display articles)
+
+-- CREATE CRAWLER TO GET GOOGLE RESULTS (display said results)
+  -- see if it's possible to get images and the likes 
+
+-- QUERY THE PERMAWEB FOR DATA
+  -- display images (include atomic assets etc)
+  -- display different datatypes
+  -- look to fullfill the requirements for the bounty (nodes etc)
+  -- Implement uploading results from google (for vouched users only)
+  -- Implement Searching for Images Only 
+  -- Implement Searching for Video Only (Second Bounty)
+
+-- ADDITIONAL FEATURES (USAGE OF MEM)
+  -- Implement Search History (including searching for results)
+  -- Implement Bookmarking (including searching for bookmarks)
+  -- Implement creating and keeping track of multiple tabs
+  -- Implement going back and forth between links
+  -- Implement closing of tags
+
+
+IMPLEMENTATION
+
+1. PERMAWEB NEWS
+
+-- use permaweb news api to fetch the latest articles✅
+-- display the articles using web view api✅
+-- consider adding a loading indicator to show to state of loading the article
+-- implement the back and forth buttons at the bottom
+
+2. AUTHENTICATION
+
+-- implement google login with Othent ❌
+-- implement email and password auth with MEM backend
+-- fix initial screen - if user is already logged in, show home screen right away
+

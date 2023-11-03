@@ -3,6 +3,7 @@ import loginStyles from '../Login/styles';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
+import {colors} from '../../themes/colors';
 import {
   View,
   Text,
@@ -11,7 +12,6 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import {colors} from '../../themes/colors';
 
 const Signup = () => {
   const navigation = useNavigation();
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   lockIcon: {
     position: 'absolute',
-    top: 298,
+    top: 288,
     left: 15,
   },
 });
