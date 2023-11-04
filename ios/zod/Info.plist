@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<<<<<<< HEAD
-=======
 <key>UIAppFonts</key>
 <array>
   <string>AntDesign.ttf</string>
@@ -26,7 +24,6 @@
   <string>Zocial.ttf</string>
   <string>Fontisto.ttf</string>
 </array>
->>>>>>> acbead8 (fix: ios config)
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
