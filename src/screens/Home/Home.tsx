@@ -2,8 +2,6 @@ import axios, {AxiosResponse} from 'axios';
 import styles from './styles';
 import React, {useEffect, useState} from 'react';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../themes/colors';
 import {
   View,
@@ -12,7 +10,6 @@ import {
   TextInput,
   Image,
   ScrollView,
-  Pressable,
   ActivityIndicator,
 } from 'react-native';
 import NewsItem from '../../components/NewsItem';
