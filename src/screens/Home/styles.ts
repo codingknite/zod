@@ -112,12 +112,6 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     paddingTop: 10,
   },
-  testingWebView: {
-    height: '85%',
-  },
-  webview: {
-    flex: 1,
-  },
 });
 
 export default styles;

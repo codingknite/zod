@@ -17,6 +17,7 @@ import {useRoute} from '@react-navigation/native';
 import BottomNav from '../../components/BottomNav';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import NavMenu from '../../components/BottomNav/components/Menu';
 
 interface TransactionTag {
   name: string;
@@ -59,6 +60,7 @@ const ViewMedia = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(true);
+  const [openMenu, setOpenMenu] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionEdge[]>([]);
   const {transactionId} = route.params;
 
@@ -117,10 +119,12 @@ const ViewMedia = () => {
     });
   };
 
+  const handleOpenMenu = () => {
+    setOpenMenu(val => !val);
+  };
+
   const imageWidth = imageDimensions.width > 0 ? imageDimensions.width : 1;
   const imageHeight = imageDimensions.width > 0 ? imageDimensions.height : 1;
-
-  console.log(transactionId);
 
   return (
     <View style={searchBarStyles.container}>
@@ -203,7 +207,8 @@ const ViewMedia = () => {
         </ScrollView>
       )}
 
-      <BottomNav />
+      {openMenu ? <NavMenu toggleMenu={handleOpenMenu} /> : null}
+      {openMenu ? null : <BottomNav toggleMenu={handleOpenMenu} />}
     </View>
   );
 };

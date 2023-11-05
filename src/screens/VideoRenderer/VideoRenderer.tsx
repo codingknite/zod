@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import searchBarStyles from '../Home/styles';
-import {View, Text, Image, TextInput, ScrollView} from 'react-native';
-import {StyleSheet, Pressable} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {colors} from '../../themes/colors';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import AntDesignIcon from 'react-native-vector-icons/AntDesign';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {View, Text, Image, TextInput, ScrollView} from 'react-native';
+import BottomNav from '../../components/BottomNav';
 import VideoResult from '../SearchResults/components/VideoResult';
+import NavMenu from '../../components/BottomNav/components/Menu';
 
 const VideoRenderer = () => {
+  const [openMenu, setOpenMenu] = useState(false);
+
+  const handleOpenMenu = () => {
+    setOpenMenu(val => !val);
+  };
+
   return (
     <View style={searchBarStyles.container}>
       <View style={searchBarStyles.searchContainer}>
@@ -56,26 +60,8 @@ const VideoRenderer = () => {
         </View>
       </ScrollView>
 
-      <View style={searchBarStyles.bottomNav}>
-        <Ionicon name="caret-back" size={25} color={colors.white.light} />
-        <Ionicon name="caret-forward" size={25} color={colors.white.light} />
-        <Pressable
-          onPress={() => {
-            // navigation.navigate('Home');
-          }}>
-          <AntDesignIcon name="plus" size={25} color={colors.white.light} />
-        </Pressable>
-        <MaterialIcon
-          name="all-inclusive-box-outline"
-          size={25}
-          color={colors.white.light}
-        />
-        <EntypoIcon
-          name="dots-three-horizontal"
-          size={25}
-          color={colors.white.light}
-        />
-      </View>
+      {openMenu ? <NavMenu toggleMenu={handleOpenMenu} /> : null}
+      {openMenu ? null : <BottomNav toggleMenu={handleOpenMenu} />}
     </View>
   );
 };
