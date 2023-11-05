@@ -23,8 +23,6 @@ const Webview = () => {
     navigation.navigate('Search');
   };
 
-  console.log('LINK', link);
-
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
