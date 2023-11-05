@@ -27,7 +27,9 @@ const NavMenu = ({toggleMenu}: Props) => {
           style={styles.menuItem}
           onPress={() => {
             toggleMenu();
-            navigation.navigate('ImageViewer');
+            navigation.navigate('MediaViewer', {
+              mediaType: 'images',
+            });
           }}>
           <Text style={styles.menuItemText}>Zod Images ↗</Text>
         </Pressable>
@@ -36,7 +38,9 @@ const NavMenu = ({toggleMenu}: Props) => {
           style={styles.menuItem}
           onPress={() => {
             toggleMenu();
-            navigation.navigate('VideoRenderer');
+            navigation.navigate('MediaViewer', {
+              mediaType: 'videos',
+            });
           }}>
           <Text style={styles.menuItemText}>Zod Videos ↗</Text>
         </Pressable>

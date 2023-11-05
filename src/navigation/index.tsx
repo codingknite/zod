@@ -8,8 +8,7 @@ import Search from '../screens/Search';
 import SearchResults from '../screens/SearchResults';
 import Onboard from '../screens/Onboard';
 import Webview from '../screens/WebView/WebView';
-import ImageViewer from '../screens/ImageViewer';
-import VideoRenderer from '../screens/VideoRenderer';
+import MediaViewer from '../screens/MediaViewer';
 import ViewMedia from '../screens/ViewMedia';
 
 type RootStackParamList = {
@@ -29,17 +28,16 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="ImageViewer">
-        <Stack.Screen name="Onboard" component={Onboard} />
+        initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="Webview" component={Webview} />
-        <Stack.Screen name="ImageViewer" component={ImageViewer} />
-        <Stack.Screen name="VideoRenderer" component={VideoRenderer} />
-        <Stack.Screen name="SearchResults" component={SearchResults} />
+        <Stack.Screen name="Onboard" component={Onboard} />
         <Stack.Screen name="ViewMedia" component={ViewMedia} />
+        <Stack.Screen name="MediaViewer" component={MediaViewer} />
+        <Stack.Screen name="SearchResults" component={SearchResults} />
       </Stack.Navigator>
     </NavigationContainer>
   );

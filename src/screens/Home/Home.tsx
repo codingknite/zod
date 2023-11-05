@@ -18,6 +18,8 @@ import {
 import NewsItem from '../../components/NewsItem';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import NavMenu from '../../components/BottomNav/components/Menu';
+import BottomNav from '../../components/BottomNav';
 
 type NewsItem = {
   creator: string;
@@ -39,8 +41,9 @@ interface FeedApiResponse {
 
 const Home = () => {
   const navigation = useNavigation();
-  const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
+  const [openMenu, setOpenMenu] = useState(false);
   const [loadingFeed, setLoadingFeed] = useState(false);
+  const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
 
   // get news feed
   useEffect(() => {
@@ -77,6 +80,10 @@ const Home = () => {
 
   const navigateToSearch = () => {
     navigation.navigate('Search');
+  };
+
+  const handleOpenMenu = () => {
+    setOpenMenu(val => !val);
   };
 
   return (
@@ -164,7 +171,7 @@ const Home = () => {
         </ScrollView>
       </ImageBackground>
 
-      <View style={styles.bottomNav}>
+      {/* <View style={styles.bottomNav}>
         <Ionicon name="caret-back" size={25} color={colors.white.light} />
         <Ionicon name="caret-forward" size={25} color={colors.white.light} />
         <Pressable
@@ -183,7 +190,10 @@ const Home = () => {
           size={25}
           color={colors.white.light}
         />
-      </View>
+      </View> */}
+
+      {openMenu ? <NavMenu toggleMenu={handleOpenMenu} /> : null}
+      {openMenu ? null : <BottomNav toggleMenu={handleOpenMenu} />}
     </View>
   );
 };
