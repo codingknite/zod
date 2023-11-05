@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import {colors} from '../../../themes/colors';
 import {useNavigation} from '@react-navigation/native';
-import {Picker} from '@react-native-picker/picker';
 
 interface Props {
   toggleMenu: () => void;
@@ -27,6 +26,7 @@ const NavMenu = ({toggleMenu}: Props) => {
         <Pressable
           style={styles.menuItem}
           onPress={() => {
+            toggleMenu();
             navigation.navigate('ImageViewer');
           }}>
           <Text style={styles.menuItemText}>Zod Images ↗</Text>
@@ -35,6 +35,7 @@ const NavMenu = ({toggleMenu}: Props) => {
         <Pressable
           style={styles.menuItem}
           onPress={() => {
+            toggleMenu();
             navigation.navigate('VideoRenderer');
           }}>
           <Text style={styles.menuItemText}>Zod Videos ↗</Text>
