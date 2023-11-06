@@ -62,7 +62,7 @@ const ViewMedia = () => {
   const [loading, setLoading] = useState(true);
   const [openMenu, setOpenMenu] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionEdge[]>([]);
-  const {transactionId} = route.params;
+  const {transactionId, mediaType} = route.params;
 
   const [imageDimensions, setImageDimensions] = useState({
     width: 0,
@@ -85,8 +85,9 @@ const ViewMedia = () => {
     const fetchTxn = async () => {
       try {
         const postData = {
-          transactionId,
+          mediaType,
           gateway: '',
+          transactionId,
         };
 
         const queryResponse: AxiosResponse<ApiResponse> = await axios.post(
