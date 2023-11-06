@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+
 import styles from './styles';
 import React, {useEffect, useState} from 'react';
 import {
@@ -6,8 +7,9 @@ import {
   Text,
   Image,
   ScrollView,
-  ActivityIndicator,
   Pressable,
+  StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import {colors} from '../../themes/colors';
 import axios, {AxiosResponse} from 'axios';
@@ -18,7 +20,7 @@ import BottomNav from '../../components/BottomNav';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import NavMenu from '../../components/BottomNav/components/Menu';
-
+import Video, {OnLoadData} from 'react-native-video';
 interface TransactionTag {
   name: string;
   value: string;
@@ -63,6 +65,11 @@ const ViewMedia = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [transactionData, setTransactionData] = useState<TransactionEdge[]>([]);
   const {transactionId, mediaType} = route.params;
+
+  const [videoDimensions, setVideoDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
 
   const [imageDimensions, setImageDimensions] = useState({
     width: 0,
@@ -124,8 +131,20 @@ const ViewMedia = () => {
     setOpenMenu(val => !val);
   };
 
+  const onVideoLoad = (data: OnLoadData) => {
+    const {height: vidHeight, width: vidWidth} = data.naturalSize;
+    setVideoDimensions({
+      ...videoDimensions,
+      height: vidHeight,
+      width: vidWidth,
+    });
+  };
+
   const imageWidth = imageDimensions.width > 0 ? imageDimensions.width : 1;
   const imageHeight = imageDimensions.width > 0 ? imageDimensions.height : 1;
+
+  console.log('WIDTH', imageWidth);
+  console.log('HEIGHT', imageHeight);
 
   return (
     <View style={searchBarStyles.container}>
@@ -144,16 +163,32 @@ const ViewMedia = () => {
             <Ionicons name="chevron-back-outline" color="#246bee" size={22} />
             <Text style={styles.backText}>Back</Text>
           </Pressable>
-          <Image
-            source={{uri: `https://arweave.net/${transactionId}`}}
-            style={[
-              styles.image,
-              {
-                width: '90%',
-                aspectRatio: imageWidth / imageHeight,
-              },
-            ]}
-          />
+          {mediaType === 'image' ? (
+            <Image
+              source={{uri: `https://arweave.net/${transactionId}`}}
+              style={[
+                styles.image,
+                {
+                  width: '90%',
+                  aspectRatio: imageWidth / imageHeight,
+                },
+              ]}
+            />
+          ) : (
+            <View style={localStyles.videoContainer}>
+              <Video
+                paused
+                controls
+                resizeMode="cover"
+                fullscreen
+                onLoad={data => onVideoLoad(data)}
+                style={[localStyles.videoPlayer]}
+                source={{
+                  uri: `https://arweave.net/${transactionId}`,
+                }}
+              />
+            </View>
+          )}
 
           <View style={styles.tagsContainer}>
             {tags &&
@@ -214,4 +249,18 @@ const ViewMedia = () => {
   );
 };
 
+const localStyles = StyleSheet.create({
+  videoContainer: {
+    height: 400,
+    width: '90%',
+    borderRadius: 5,
+    alignSelf: 'center',
+  },
+  videoPlayer: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 6,
+    backgroundColor: colors.gray.light,
+  },
+});
 export default ViewMedia;

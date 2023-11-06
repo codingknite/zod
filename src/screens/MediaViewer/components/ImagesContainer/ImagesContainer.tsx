@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles';
-import ImageItem from '../ImageItem';
+import ImageItem from './ImageItem';
 import {View, Text, Pressable, ActivityIndicator} from 'react-native';
 
 export interface ImageTxnProps {
@@ -41,8 +41,8 @@ const ImagesContainer = ({loadingData, data}: Props) => {
   return (
     <>
       <View style={styles.mainContainer}>
-        {data.map(image => (
-          <ImageItem image={image} key={image.node.id} />
+        {data.map((image, index) => (
+          <ImageItem image={image} key={index} />
         ))}
       </View>
 
