@@ -8,8 +8,9 @@ import axios, {AxiosResponse} from 'axios';
 import searchBarStyles from '../Home/styles';
 import TopNav from '../../components/TopNav';
 import BottomNav from '../../components/BottomNav';
-import ImagesContainer from './components/ImagesContainer';
+import ImagesContainer from './components/ImagesContainer/ImagesContainer';
 import NavMenu from '../../components/BottomNav/components/Menu';
+import Video from 'react-native-video';
 
 interface QueryDataProps {
   node: {
@@ -26,8 +27,8 @@ interface QueryDataProps {
 }
 
 interface ApiResponseProps {
+  count: number;
   message: string;
-  query: string;
   data: Array<QueryDataProps>;
 }
 
@@ -41,14 +42,9 @@ const MediaViewer = () => {
     useState<MediaCategoryProps>(mediaType);
   const [openMenu, setOpenMenu] = useState(false);
   const [userInput, setUserInput] = useState('');
-  const [customInput, setCustomInput] = useState({
-    name: '',
-    value: '',
-  });
-  const [addAppName, setAddAppName] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [queryData, setQueryData] = useState<Array<QueryDataProps>>([]);
-  // const [videoQueryData, setVideoQueryData] = useState<Array<QueryDataProps>>([]);
+  const [queryDataCount, setQueryDataCount] = useState<number>(0);
 
   const handleSubmit = useCallback(async () => {
     setLoadingData(true);
@@ -58,23 +54,23 @@ const MediaViewer = () => {
 
       if (!userInput) {
         postData = {
-          gateway: '',
           mediaType,
+          gateway: '',
         };
       } else {
         const isTransactionId = userInput.length === 43;
 
         if (isTransactionId) {
           postData = {
-            transactionId: userInput.trim(),
-            gateway: '',
             mediaType,
+            gateway: '',
+            transactionId: userInput.trim(),
           };
         } else {
           postData = {
-            titleTag: userInput.trim(),
-            gateway: '',
             mediaType,
+            gateway: '',
+            searchString: userInput.trim(),
           };
         }
       }
@@ -88,6 +84,7 @@ const MediaViewer = () => {
 
       if (responseData) {
         setQueryData(responseData.data);
+        setQueryDataCount(responseData.count);
         setLoadingData(false);
       }
     } catch (error) {
@@ -95,60 +92,12 @@ const MediaViewer = () => {
     }
   }, [userInput]);
 
-  const searchCustomTags = async () => {
-    setLoadingData(true);
-
-    try {
-      if (customInput.name && customInput.value) {
-        const postData = {
-          gateway: '',
-          mediaType,
-          customTagName: customInput.name.trim(),
-          customTagValue: customInput.value.trim(),
-        };
-
-        const queryResponse: AxiosResponse<ApiResponseProps> = await axios.post(
-          'http://localhost:3000/api/query-arweave',
-          postData,
-        );
-
-        const responseData = queryResponse.data;
-
-        if (responseData) {
-          setQueryData(responseData.data);
-          setLoadingData(false);
-        }
-      }
-    } catch (error) {
-      setLoadingData(false);
-    }
-  };
-
   useEffect(() => {
     handleSubmit();
   }, [mediaType]);
 
   const handleUserInput = (text: string) => {
     setUserInput(text);
-  };
-
-  const handleCustomName = (text: string) => {
-    setCustomInput({
-      ...customInput,
-      name: text,
-    });
-  };
-
-  const handleCustomValue = (text: string) => {
-    setCustomInput({
-      ...customInput,
-      value: text,
-    });
-  };
-
-  const handleAddAppName = () => {
-    setUserInput('');
-    setAddAppName(val => !val);
   };
 
   const handleOpenMenu = () => {
@@ -196,68 +145,39 @@ const MediaViewer = () => {
           </View>
 
           <TextInput
-            placeholder={`Enter transaction id or ${
-              mediaCategory === 'images' ? 'image' : 'video'
-            } title`}
+            placeholder="Search or Enter transaction id"
             style={styles.textInput}
             placeholderTextColor={colors.textGray}
             onChangeText={handleUserInput}
             onSubmitEditing={handleSubmit}
-            editable={!addAppName}
             autoCapitalize="none"
             autoComplete="off"
             value={userInput}
           />
 
-          {mediaCategory === 'videos' ? null : (
-            <>
-              <Pressable
-                style={[styles.addCustom, addAppName && styles.specialStyles]}
-                onPress={handleAddAppName}>
-                <Text style={styles.infoText}>Add Custom Tag</Text>
-              </Pressable>
-
-              <View style={styles.additionalInfo}>
-                {addAppName ? (
-                  <>
-                    <TextInput
-                      autoComplete="off"
-                      placeholder="Name"
-                      autoCapitalize="none"
-                      value={customInput.name}
-                      onSubmitEditing={handleSubmit}
-                      style={styles.customInputField}
-                      onChangeText={handleCustomName}
-                      placeholderTextColor={colors.textGray}
-                    />
-                    <TextInput
-                      autoComplete="off"
-                      placeholder="Value"
-                      autoCapitalize="none"
-                      value={customInput.value}
-                      onSubmitEditing={handleSubmit}
-                      style={styles.customInputField}
-                      onChangeText={handleCustomValue}
-                      placeholderTextColor={colors.textGray}
-                    />
-                  </>
-                ) : null}
-              </View>
-            </>
-          )}
-
-          {addAppName ? (
-            <Pressable style={[styles.submitCustom]} onPress={searchCustomTags}>
-              <Text style={styles.infoText}>
-                Searches {mediaCategory === 'images' ? 'Images' : 'Videos'}
-              </Text>
-            </Pressable>
-          ) : null}
-
-          {mediaCategory === 'images' ? (
-            <ImagesContainer data={queryData} loadingData={loadingData} />
+          {queryDataCount === 0 ? (
+            <Text
+              style={[
+                styles.mediaType,
+                mediaCategory === 'images' ? styles.selectedMedia : {},
+              ]}>
+              No Results Try Again
+            </Text>
           ) : (
-            <Text>Show Video Here</Text>
+            <>
+              {mediaCategory === 'images' ? (
+                <ImagesContainer data={queryData} loadingData={loadingData} />
+              ) : (
+                <Video
+                  source={{
+                    uri: 'https://arweave.net/vWmEPKJWE6eRzQBJQ_TwELNjSY0-umSu-cNTaeCRZUc',
+                  }}
+                  muted
+                  repeat
+                  style={styles.videoContainer}
+                />
+              )}
+            </>
           )}
         </View>
       </ScrollView>

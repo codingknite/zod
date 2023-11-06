@@ -127,6 +127,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     borderRadius: 32,
   },
+  videoContainer: {
+    // backgroundColor: 'orangered',
+    height: 250,
+    width: '90%',
+    alignSelf: 'center',
+    marginTop: 15,
+    borderRadius: 5,
+  },
 });
 
 export default styles;
