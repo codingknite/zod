@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useState} from 'react';
 import loginStyles from '../Login/styles';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
@@ -11,10 +12,65 @@ import {
   SafeAreaView,
   TextInput,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Signup = () => {
   const navigation = useNavigation();
+  const [userInfo, setUserInfo] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
+  const [invalidEmail, setInvalidEmail] = useState(false);
+  const [loadingSignup, setLoadingSignup] = useState(false);
+  const [invalidUserInfo, setInvalidUserInfo] = useState(false);
+  const [emailAlreadyUsed, setEmailAlreadyUsed] = useState(false);
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
+
+  const handleSignup = async () => {
+    setLoadingSignup(true);
+
+    if (userInfo.fullName && userInfo.email && userInfo.password) {
+      const emailValid = validateEmail(userInfo.email);
+
+      if (emailValid) {
+        const addUser = await axios.post('http://localhost:3000/api/signup', {
+          email: userInfo.email,
+          fullName: userInfo.fullName,
+          password: userInfo.password,
+        });
+
+        const data = await addUser.data;
+
+        if (data.message === 'SUCCESSFUL SIGNUP') {
+          await AsyncStorage.setItem('user-token', data.token);
+          const userToken = await AsyncStorage.getItem('user-token');
+
+          if (userToken) {
+            setLoadingSignup(false);
+            navigation.navigate('Home');
+          }
+        } else if (data.message === 'USER EXISTS') {
+          setEmailAlreadyUsed(true);
+          setUserInfo({...userInfo, email: ''});
+          setLoadingSignup(false);
+        }
+      } else {
+        setInvalidEmail(true);
+        setUserInfo({...userInfo, email: ''});
+        setLoadingSignup(false);
+      }
+    } else {
+      setInvalidUserInfo(true);
+      setLoadingSignup(false);
+    }
+  };
 
   return (
     <SafeAreaView style={loginStyles.mainContainer}>
@@ -28,13 +84,20 @@ const Signup = () => {
         </View>
 
         <View style={loginStyles.formContainer}>
-          <Text style={loginStyles.emailText}>Full Name</Text>
+          <Text style={loginStyles.emailText}>* Full Name</Text>
           <TextInput
             placeholder="Enter Full Name"
             placeholderTextColor="#adb5bd"
             style={styles.formInput}
             autoCapitalize="none"
             textContentType="none"
+            onChangeText={text => {
+              setUserInfo({
+                ...userInfo,
+                fullName: text,
+              });
+            }}
+            value={userInfo.fullName}
           />
           <MaterialIcon
             name="person-4"
@@ -43,13 +106,24 @@ const Signup = () => {
             color={colors.white.medium}
           />
 
-          <Text style={loginStyles.emailText}>Email Address</Text>
+          <Text style={loginStyles.emailText}>* Email Address</Text>
           <TextInput
             placeholder="Enter Email Address"
             placeholderTextColor="#adb5bd"
-            style={styles.formInput}
+            style={[
+              styles.formInput,
+              invalidEmail || emailAlreadyUsed ? styles.invalidEmail : {},
+            ]}
             autoCapitalize="none"
             textContentType="none"
+            keyboardType="email-address"
+            onChangeText={text => {
+              setUserInfo({
+                ...userInfo,
+                email: text,
+              });
+            }}
+            value={userInfo.email}
           />
           <MaterialIcon
             name="email"
@@ -58,12 +132,19 @@ const Signup = () => {
             color={colors.white.medium}
           />
 
-          <Text style={loginStyles.passwordText}>Password</Text>
+          <Text style={loginStyles.passwordText}>* Password</Text>
           <TextInput
             placeholder="Enter Password"
             placeholderTextColor="#adb5bd"
             style={styles.formInput}
             secureTextEntry={true}
+            onChangeText={text => {
+              setUserInfo({
+                ...userInfo,
+                password: text,
+              });
+            }}
+            value={userInfo.password}
           />
           <MaterialIcon
             name="lock"
@@ -73,16 +154,24 @@ const Signup = () => {
           />
         </View>
 
-        <Pressable style={loginStyles.loginButton}>
-          <Text style={loginStyles.loginButtonText}>Continue</Text>
-        </Pressable>
-      </View>
+        {invalidEmail ? (
+          <Text style={styles.fillFieldsText}>
+            Invalid Email. Enter Valid Email Address
+          </Text>
+        ) : invalidUserInfo ? (
+          <Text style={styles.fillFieldsText}>
+            Fill In All Required Fields (*)
+          </Text>
+        ) : emailAlreadyUsed ? (
+          <Text style={styles.fillFieldsText}>Email Address Already Used</Text>
+        ) : null}
 
-      <View style={loginStyles.googleAuthContainer}>
-        <Text style={loginStyles.continueWithText}>or continue with</Text>
-        <Pressable style={loginStyles.googleAuthButton}>
-          <AntIcon name="google" size={26} color={colors.white.light} />
-          <Text style={loginStyles.googleAuthText}>Login with Google</Text>
+        <Pressable style={loginStyles.loginButton} onPress={handleSignup}>
+          {loadingSignup ? (
+            <ActivityIndicator size="small" color={colors.white.light} />
+          ) : (
+            <Text style={loginStyles.loginButtonText}>Continue</Text>
+          )}
         </Pressable>
       </View>
     </SafeAreaView>
@@ -96,18 +185,27 @@ const styles = StyleSheet.create({
   },
   personIcon: {
     position: 'absolute',
-    top: 60,
     left: 15,
+    top: 57.5,
   },
   mailIcon: {
     position: 'absolute',
-    top: 173,
     left: 15,
+    top: 168.5,
   },
   lockIcon: {
     position: 'absolute',
-    top: 288,
     left: 15,
+    top: 285.5,
+  },
+  fillFieldsText: {
+    fontSize: 12,
+    fontWeight: '700',
+    paddingVertical: 12,
+    color: colors.errorRed,
+  },
+  invalidEmail: {
+    borderColor: colors.errorRed,
   },
 });
 export default Signup;
