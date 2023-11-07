@@ -3,7 +3,6 @@ function setPostData(userInput: string, category: 'images' | 'videos') {
 
   if (!userInput) {
     postData = {
-      gateway: '',
       mediaType: category,
     };
   } else {
@@ -11,13 +10,11 @@ function setPostData(userInput: string, category: 'images' | 'videos') {
 
     if (isTransactionId) {
       postData = {
-        gateway: '',
         mediaType: category,
         transactionId: userInput.trim(),
       };
     } else {
       postData = {
-        gateway: '',
         mediaType: category,
         searchString: userInput.trim(),
       };

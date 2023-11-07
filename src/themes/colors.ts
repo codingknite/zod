@@ -19,4 +19,5 @@ export const colors = {
     secondary: '#1A1E24',
   },
   textGray: '#ced4da',
+  errorRed: '#ff4d6d',
 };
