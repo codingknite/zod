@@ -49,6 +49,7 @@ const Signup = () => {
         const data = await addUser.data;
 
         if (data.message === 'SUCCESSFUL SIGNUP') {
+          await AsyncStorage.setItem('user-id', data.userId);
           await AsyncStorage.setItem('user-token', data.token);
           const userToken = await AsyncStorage.getItem('user-token');
 
