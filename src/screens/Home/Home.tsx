@@ -7,16 +7,17 @@ import {
   View,
   Text,
   ImageBackground,
-  TextInput,
-  Image,
   ScrollView,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import NewsItem from '../../components/NewsItem';
 import {useNavigation} from '@react-navigation/native';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import NavMenu from '../../components/BottomNav/components/Menu';
+import NavMenu from '../../components/BottomNav/components/NavMenu';
 import BottomNav from '../../components/BottomNav';
+import TopNav from '../../components/TopNav';
+import Profile from '../../components/Profile';
 
 type NewsItem = {
   creator: string;
@@ -39,6 +40,7 @@ interface FeedApiResponse {
 const Home = () => {
   const navigation = useNavigation();
   const [openMenu, setOpenMenu] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
   const [loadingFeed, setLoadingFeed] = useState(false);
   const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
 
@@ -80,31 +82,19 @@ const Home = () => {
   };
 
   const handleOpenMenu = () => {
-    setOpenMenu(val => !val);
+    setOpenMenu(!openMenu);
+  };
+
+  const toggleProfile = () => {
+    setOpenProfile(!openProfile);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <View style={styles.searchBarWrapper}>
-          <TextInput
-            onPressIn={navigateToSearch}
-            style={styles.searchBar}
-            placeholder="Search or enter trasaction id"
-            placeholderTextColor={colors.white.medium}
-            autoFocus={false}
-          />
-          <View style={styles.logoContainer}>
-            <Image
-              source={require('../../assets/images/logo.png')}
-              style={styles.logo}
-            />
-          </View>
-        </View>
-      </View>
+      <TopNav />
 
       <ImageBackground
-        source={require('../../assets/images/home2.webp')}
+        source={require('../../assets/images/home8.webp')}
         style={styles.backgroundImage}
         resizeMode="cover">
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -128,19 +118,29 @@ const Home = () => {
                 <Text style={styles.shortcutItemText}>History</Text>
               </View>
 
-              <View style={styles.shortcutItem}>
+              <Pressable
+                style={styles.shortcutItem}
+                onPress={() => {
+                  navigation.navigate('MediaViewer', {
+                    mediaType: 'images',
+                  });
+                }}>
                 <View style={styles.shortCutIcon}>
-                  <EntypoIcon name="upload" size={25} />
+                  <EntypoIcon name="images" size={25} />
                 </View>
-                <Text style={styles.shortcutItemText}>Public Uploads</Text>
-              </View>
+                <Text style={styles.shortcutItemText}>Zod Images</Text>
+              </Pressable>
 
-              <View style={styles.shortcutItem}>
+              <Pressable
+                style={styles.shortcutItem}
+                onPress={() => {
+                  setOpenProfile(true);
+                }}>
                 <View style={styles.shortCutIcon}>
                   <MaterialCommunityIcon name="account" size={25} />
                 </View>
                 <Text style={styles.shortcutItemText}>Profile</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
 
@@ -168,29 +168,12 @@ const Home = () => {
         </ScrollView>
       </ImageBackground>
 
-      {/* <View style={styles.bottomNav}>
-        <Ionicon name="caret-back" size={25} color={colors.white.light} />
-        <Ionicon name="caret-forward" size={25} color={colors.white.light} />
-        <Pressable
-          onPress={() => {
-            navigation.navigate('Search');
-          }}>
-          <Ionicon name="search-outline" size={25} color={colors.white.light} />
-        </Pressable>
-        <MaterialIcon
-          name="all-inclusive-box-outline"
-          size={25}
-          color={colors.white.light}
-        />
-        <EntypoIcon
-          name="dots-three-horizontal"
-          size={25}
-          color={colors.white.light}
-        />
-      </View> */}
-
-      {openMenu ? <NavMenu toggleMenu={handleOpenMenu} /> : null}
-      {openMenu ? null : <BottomNav toggleMenu={handleOpenMenu} />}
+      {openProfile ? <Profile toggleProfile={toggleProfile} /> : null}
+      {openMenu ? (
+        <NavMenu toggleMenu={handleOpenMenu} />
+      ) : (
+        <BottomNav toggleMenu={handleOpenMenu} />
+      )}
     </View>
   );
 };

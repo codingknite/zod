@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
 
   shortcutsContainer: {
     width: '85%',
+    borderRadius: 10,
     alignSelf: 'center',
     marginVertical: 25,
-    borderRadius: 10,
     paddingVertical: 15,
-    backgroundColor: colors.gray.dark,
+    backgroundColor: colors.black.onboardScreen,
   },
   shortcutsText: {
     padding: 5,
