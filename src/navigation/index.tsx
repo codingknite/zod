@@ -10,6 +10,7 @@ import Onboard from '../screens/Onboard';
 import Webview from '../screens/WebView/WebView';
 import MediaViewer from '../screens/MediaViewer';
 import ViewMedia from '../screens/ViewMedia';
+import SplashScreen from '../screens/Splash';
 
 type RootStackParamList = {
   Home: undefined;
@@ -28,7 +29,8 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName="Home">
+        initialRouteName="SplashScreen">
+        <Stack.Screen name="SplashScreen" component={SplashScreen} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Signup" component={Signup} />
