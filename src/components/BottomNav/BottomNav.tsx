@@ -13,16 +13,25 @@ interface Props {
 
 const BottomNav = ({toggleMenu}: Props) => {
   const navigation = useNavigation();
+  const canGoBack = navigation.canGoBack();
+  const caretColor = canGoBack ? colors.white.light : '#6c757d';
 
   return (
     <View style={styles.container}>
       <Pressable
         onPress={() => {
-          navigation.goBack();
+          if (canGoBack) {
+            navigation.goBack();
+          }
         }}>
-        <Ionicon name="caret-back" size={25} color={colors.white.light} />
+        <Ionicon size={24} name="caret-back" color={caretColor} />
       </Pressable>
-      <Ionicon name="caret-forward" size={25} color={colors.white.light} />
+      <Pressable
+        onPress={() => {
+          const canGoBack = navigation.canGoBack();
+        }}>
+        <Ionicon name="caret-forward" size={25} color={colors.white.light} />
+      </Pressable>
       <Pressable
         onPress={() => {
           navigation.navigate('Home');
