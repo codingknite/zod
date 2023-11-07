@@ -2,19 +2,31 @@ import {StyleSheet} from 'react-native';
 import {colors} from '../../themes/colors';
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    height: '50%',
+    backgroundColor: colors.black.onboardScreen,
+  },
+  toggleProfileLoading: {
+    alignSelf: 'flex-end',
+  },
+  loadingActivity: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
-    height: '95%',
+    height: '50%',
     backgroundColor: colors.black.onboardScreen,
   },
   areaContainer: {
     marginBottom: 15,
   },
   doneText: {
-    padding: 10,
-    fontSize: 15,
-    paddingRight: 15,
+    fontSize: 14,
     fontWeight: '500',
     textAlign: 'right',
+    paddingVertical: 12,
+    paddingHorizontal: 20,
     color: colors.blue.medium,
   },
   profileInfoContainer: {
@@ -27,7 +39,7 @@ const styles = StyleSheet.create({
     color: colors.white.medium,
   },
   balanceHeader: {
-    fontSize: 16,
+    fontSize: 13,
     marginTop: 10,
     fontWeight: '500',
     color: colors.textGray,
@@ -36,76 +48,36 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginTop: 10,
     fontWeight: '700',
-    color: '#adb5bd',
+    color: colors.blue.light,
   },
   address: {
     marginTop: 8,
     fontSize: 12.5,
     color: '#e9ecef',
   },
-  uploadsHeader: {
-    fontSize: 16,
-    marginTop: 20,
-    marginBottom: 10,
-    fontWeight: '600',
-    paddingVertical: 5,
-    paddingHorizontal: 12,
-    color: colors.textGray,
-  },
-  uploadsContainer: {},
-  uploadItem: {
-    padding: 10,
-    marginBottom: 10,
-    paddingBottom: 15,
-    marginHorizontal: 12,
-    paddingHorizontal: 12,
-    backgroundColor: '#16191c',
-  },
-  uploadTitleContainer: {
+  buttonsContainer: {
+    width: '90%',
+    marginTop: 25,
+    paddingVertical: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
-    alignItems: 'center',
   },
-  uploadTitle: {
-    fontSize: 17.5,
-    width: '80%',
-    fontWeight: '500',
-    color: colors.white.light,
-  },
-  uploadPrice: {
-    width: '20%',
-    textAlign: 'right',
-    fontSize: 17.5,
-    fontWeight: '500',
-    color: colors.white.light,
-  },
-  metaInfo: {
+  buttonItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 5,
+    padding: 12,
+    borderRadius: 32,
+    width: '45%',
+    justifyContent: 'center',
+    backgroundColor: colors.black.light,
   },
-  ansInfoContainer: {
-    gap: 12,
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  tag: {
-    paddingVertical: 7.5,
-    paddingHorizontal: 10,
-    fontSize: 13,
-    fontWeight: '500',
-    borderWidth: 0.75,
-    borderRadius: 5,
-    color: colors.textGray,
-    borderColor: colors.primary,
-    maxWidth: 130,
-  },
-  dateInfo: {},
-  dateText: {
+  buttonText: {
     fontSize: 12,
-    fontWeight: '500',
-    color: colors.textGray,
+    fontWeight: '700',
+    color: colors.white.light,
   },
 });
 
