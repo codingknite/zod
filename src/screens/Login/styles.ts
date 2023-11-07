@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   emailText: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '600',
     paddingVertical: 5,
     color: colors.white.medium,
@@ -72,30 +72,14 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.white.light,
   },
-  googleAuthContainer: {
-    padding: 15,
+  fillFieldsText: {
+    fontSize: 12,
+    fontWeight: '700',
+    paddingVertical: 12,
+    color: colors.errorRed,
   },
-  continueWithText: {
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-    color: '#adb5bd',
-    marginBottom: 15,
-  },
-  googleAuthButton: {
-    gap: 10,
-    padding: 16,
-    marginTop: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    backgroundColor: colors.gray.light,
-  },
-  googleAuthText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: colors.white.light,
+  invalidStyles: {
+    borderColor: colors.errorRed,
   },
 });
 
