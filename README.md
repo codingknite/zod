@@ -47,6 +47,6 @@ If everything is set up _correctly_, you should see your new app running in your
 
 ## Step 3: Start the server
 
-The Zod-Api or server can be found at [Zod-Api](https://github.com/codingknite.com/zod-api)
+The Zod-Api or server can be found at [Zod-Api](https://github.com/codingknite/zod-api)
 
 Follow the instructions there to start the server. The server must be running along with the application for it to work.
