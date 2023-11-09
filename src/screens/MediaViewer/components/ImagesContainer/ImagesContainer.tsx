@@ -35,7 +35,11 @@ const ImagesContainer = ({loadingData, data}: Props) => {
   }
 
   if (data.length === 0) {
-    return null;
+    return (
+      <Text style={{color: '#fff', alignSelf: 'center', marginTop: 100}}>
+        No Results :/
+      </Text>
+    );
   }
 
   return (

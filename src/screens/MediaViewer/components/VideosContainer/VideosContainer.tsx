@@ -1,6 +1,6 @@
 import React from 'react';
 import VideoItem from './VideoItem';
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
+import {View, ActivityIndicator, StyleSheet, Text} from 'react-native';
 
 export interface TxnProps {
   node: {
@@ -34,7 +34,11 @@ const VideosContainer = ({data, loadingData}: Props) => {
   }
 
   if (data.length === 0) {
-    return null;
+    return (
+      <Text style={{color: '#fff', alignSelf: 'center', marginTop: 100}}>
+        No Results :/
+      </Text>
+    );
   }
 
   return (

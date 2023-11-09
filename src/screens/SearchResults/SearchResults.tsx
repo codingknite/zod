@@ -237,27 +237,43 @@ const SearchResults = () => {
                 </View>
               ) : (
                 <>
-                  {searchData.pages.map((data, index) => (
-                    <PageResult
-                      id={data.node.id}
-                      tags={data.node.tags}
-                      key={index}
-                    />
-                  ))}
+                  {searchData.pages.length === 0 ? (
+                    <Text style={{color: '#fff', alignSelf: 'center'}}>
+                      No Results :/
+                    </Text>
+                  ) : (
+                    <>
+                      {searchData.pages.map((data, index) => (
+                        <PageResult
+                          id={data.node.id}
+                          tags={data.node.tags}
+                          key={index}
+                        />
+                      ))}
+                    </>
+                  )}
                 </>
               )}
             </>
           ) : currentCategory === 'images' ? (
             <>
-              <ImagesContainer
-                data={searchData.images}
-                loadingData={loadingState.images}
-              />
+              {searchData.videos.length === 0 ? (
+                <Text style={{color: '#fff', alignSelf: 'center'}}>
+                  No Results :/
+                </Text>
+              ) : (
+                <ImagesContainer
+                  data={searchData.images}
+                  loadingData={loadingState.images}
+                />
+              )}
             </>
           ) : currentCategory === 'videos' ? (
             <>
               {searchData.videos.length === 0 ? (
-                <Text style={{color: '#fff'}}>No Results :/</Text>
+                <Text style={{color: '#fff', alignSelf: 'center'}}>
+                  No Results :/
+                </Text>
               ) : (
                 <VideosContainer
                   data={searchData.videos}
