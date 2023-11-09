@@ -3,6 +3,8 @@ import {Text, Image, StyleSheet, Pressable} from 'react-native';
 import {colors} from '../../themes/colors';
 import {format} from 'date-fns';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 interface Props {
   imageSource: string | null;
@@ -13,10 +15,24 @@ interface Props {
 const NewsItem = ({headline, date, imageSource, link}: Props) => {
   const navigation = useNavigation();
 
-  const openArticle = () => {
-    navigation.navigate('Webview', {
-      link,
-    });
+  const openArticle = async () => {
+    const userId = await AsyncStorage.getItem('user-id');
+
+    const resRecentSearch = await axios.post(
+      'http://localhost:3000/api/add-history',
+      {
+        userId,
+        text: link,
+      },
+    );
+
+    const postRecentSearch = resRecentSearch.data;
+
+    if (postRecentSearch.message === 'SUCCESSFUL') {
+      navigation.navigate('Webview', {
+        link,
+      });
+    }
   };
 
   return (

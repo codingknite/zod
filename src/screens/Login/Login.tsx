@@ -15,8 +15,6 @@ import {
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// todo set email address value to lowercase
-
 const Login = () => {
   const navigation = useNavigation();
 
@@ -133,6 +131,8 @@ const Login = () => {
               validationState.invalidCredentials && styles.invalidStyles,
             ]}
             autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect={false}
             textContentType="none"
             onChangeText={text => {
               setUserInfo({
@@ -205,5 +205,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// todo: implement authentication with continue button

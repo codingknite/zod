@@ -26,8 +26,7 @@ const Onboard = () => {
       <View style={styles.onboardContainer}>
         <Text style={styles.welcomeText}>Welcome to Zod</Text>
         <Text style={styles.secondaryText}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae nobis
-          inventore error porro fugiat officia.
+          Surf the permaweb. Anytime. Anywhere
         </Text>
 
         <View style={styles.buttonsContainer}>

@@ -19,7 +19,7 @@ import {useRoute} from '@react-navigation/native';
 import BottomNav from '../../components/BottomNav';
 import {useNavigation} from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import NavMenu from '../../components/BottomNav/components/Menu';
+import NavMenu from '../../components/BottomNav/components/NavMenu';
 import Video, {OnLoadData} from 'react-native-video';
 interface TransactionTag {
   name: string;
@@ -93,7 +93,6 @@ const ViewMedia = () => {
       try {
         const postData = {
           mediaType,
-          gateway: '',
           transactionId,
         };
 
@@ -143,12 +142,12 @@ const ViewMedia = () => {
   const imageWidth = imageDimensions.width > 0 ? imageDimensions.width : 1;
   const imageHeight = imageDimensions.width > 0 ? imageDimensions.height : 1;
 
-  console.log('WIDTH', imageWidth);
-  console.log('HEIGHT', imageHeight);
-
   return (
     <View style={searchBarStyles.container}>
-      <TopNav />
+      <TopNav
+        navValue={`arweave-search.goldsky.com?${mediaType}=${transactionId}`}
+      />
+
       {loading ? (
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="small" color={colors.white.light} />

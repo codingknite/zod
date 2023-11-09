@@ -46,10 +46,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-// done -> Home ✅
-// done -> Login ✅
-// done -> Signup ✅
-// done -> Search ✅
-// done -> SearchResults ✅
-// todo configure react-navigation on Android

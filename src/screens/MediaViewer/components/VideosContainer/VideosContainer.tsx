@@ -44,12 +44,6 @@ const VideosContainer = ({data, loadingData}: Props) => {
           <VideoItem video={vd} key={index} />
         ))}
       </View>
-
-      {/* {data.length < 100 ? null : (
-        <Pressable style={styles.viewMoreContainer}>
-          <Text style={styles.viewMoreText}>View More</Text>
-        </Pressable>
-      )} */}
     </>
   );
 };

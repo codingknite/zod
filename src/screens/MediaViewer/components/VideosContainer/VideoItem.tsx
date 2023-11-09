@@ -52,7 +52,7 @@ const VideoItem = ({video}: VideoItemProps) => {
             onLoad={data => onVideoLoad(data)}
             style={styles.videoPlayer}
             source={{
-              uri: `https://g8way.io/${video.node.id}`,
+              uri: `https://arweave.net/${video.node.id}`,
             }}
           />
           <Text style={styles.playTime}>{formatDuration(videoDuration)}</Text>

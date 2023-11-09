@@ -3,12 +3,12 @@ import {colors} from '../../themes/colors';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'gray',
     height: '100%',
+    backgroundColor: colors.black.onboardScreen,
   },
   searchContainer: {
     gap: 10,
-    paddingTop: 70,
+    paddingTop: 55,
     alignItems: 'center',
     paddingVertical: 10,
     flexDirection: 'row',
@@ -16,24 +16,36 @@ const styles = StyleSheet.create({
     backgroundColor: colors.gray.light,
   },
   searchInput: {
-    width: '85%',
-    paddingHorizontal: 15,
-    paddingVertical: 11,
+    width: '100%',
+    fontSize: 15,
     borderRadius: 10,
-    fontSize: 16,
+    paddingRight: 38,
     fontWeight: '500',
+    paddingVertical: 11,
+    paddingHorizontal: 15,
     color: colors.white.light,
     backgroundColor: colors.black.onboardScreen,
   },
+  searchInputWrapper: {
+    width: '85%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cancelIcon: {
+    position: 'absolute',
+    right: 9,
+  },
   cancelText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#adb5bd',
     fontWeight: '500',
   },
   recentSearchesContainer: {
     padding: 10,
-    height: '100%',
-    backgroundColor: '#212529',
+    backgroundColor: colors.black.onboardScreen,
+  },
+  searchesWrapper: {
+    height: '85%',
   },
   recentSearchesHeader: {
     flexDirection: 'row',
@@ -65,8 +77,8 @@ const styles = StyleSheet.create({
   },
   searchItemText: {
     fontSize: 14,
-    fontWeight: '500',
     color: '#adb5bd',
+    fontWeight: '500',
   },
 });
 

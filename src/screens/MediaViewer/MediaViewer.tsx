@@ -4,7 +4,7 @@ import TopNav from '../../components/TopNav';
 import searchBarStyles from '../Home/styles';
 import BottomNav from '../../components/BottomNav';
 import VideosContainer from './components/VideosContainer';
-import NavMenu from '../../components/BottomNav/components/Menu';
+import NavMenu from '../../components/BottomNav/components/NavMenu';
 import ImagesContainer from './components/ImagesContainer/ImagesContainer';
 
 import {Pressable} from 'react-native';
@@ -51,6 +51,10 @@ const MediaViewer = () => {
   const [imagesData, setImagesData] = useState<Array<QueryDataProps>>([]);
   const [videosData, setVideosData] = useState<Array<QueryDataProps>>([]);
 
+  useEffect(() => {
+    setMediaCategory(mediaType);
+  }, [mediaType]);
+
   const fetchMedia = async () => {
     if (mediaCategory === 'images') {
       setLoadingImageData(true);
@@ -62,7 +66,7 @@ const MediaViewer = () => {
       const apiData = setPostData(userInput, mediaCategory);
 
       const queryResponse: AxiosResponse<ApiResponseProps> = await axios.post(
-        'http://localhost:3000/api/query-arweave',
+        'http://localhost:3000/api/query-media',
         apiData,
       );
       const responseData = queryResponse.data;
@@ -91,7 +95,7 @@ const MediaViewer = () => {
 
   return (
     <View style={searchBarStyles.container}>
-      <TopNav />
+      <TopNav navValue={`arweave-search.goldsky.com?c=${mediaCategory}`} />
 
       <ScrollView
         style={styles.mainContainer}
@@ -100,6 +104,7 @@ const MediaViewer = () => {
           <Pressable
             onPress={() => {
               if (!loadingVideoData) {
+                setUserInput('');
                 setMediaCategory('images');
               }
             }}>
@@ -118,6 +123,7 @@ const MediaViewer = () => {
           <Pressable
             onPress={() => {
               if (!loadingImageData) {
+                setUserInput('');
                 setMediaCategory('videos');
               }
             }}>
@@ -143,6 +149,7 @@ const MediaViewer = () => {
           value={userInput}
           autoComplete="off"
           autoCapitalize="none"
+          autoCorrect={false}
           style={styles.textInput}
           onChangeText={text => {
             setUserInput(text);

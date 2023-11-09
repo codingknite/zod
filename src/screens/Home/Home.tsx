@@ -18,6 +18,7 @@ import NavMenu from '../../components/BottomNav/components/NavMenu';
 import BottomNav from '../../components/BottomNav';
 import TopNav from '../../components/TopNav';
 import Profile from '../../components/Profile';
+import History from '../../components/BottomNav/components/History';
 
 type NewsItem = {
   creator: string;
@@ -41,6 +42,7 @@ const Home = () => {
   const navigation = useNavigation();
   const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
+  const [openHistory, setOpenHistory] = useState(false);
   const [loadingFeed, setLoadingFeed] = useState(false);
   const [newsFeed, setNewsFeed] = useState<NewsItem[]>([]);
 
@@ -77,16 +79,16 @@ const Home = () => {
     }
   };
 
-  const navigateToSearch = () => {
-    navigation.navigate('Search');
-  };
-
   const handleOpenMenu = () => {
     setOpenMenu(!openMenu);
   };
 
   const toggleProfile = () => {
     setOpenProfile(!openProfile);
+  };
+
+  const toggleHistory = () => {
+    setOpenHistory(!openHistory);
   };
 
   return (
@@ -111,12 +113,16 @@ const Home = () => {
                 <Text style={styles.shortcutItemText}>Bookmarks</Text>
               </View>
 
-              <View style={styles.shortcutItem}>
+              <Pressable
+                style={styles.shortcutItem}
+                onPress={() => {
+                  setOpenHistory(true);
+                }}>
                 <View style={styles.shortCutIcon}>
                   <EntypoIcon name="back-in-time" size={25} />
                 </View>
                 <Text style={styles.shortcutItemText}>History</Text>
-              </View>
+              </Pressable>
 
               <Pressable
                 style={styles.shortcutItem}
@@ -168,9 +174,12 @@ const Home = () => {
         </ScrollView>
       </ImageBackground>
 
-      {openProfile ? <Profile toggleProfile={toggleProfile} /> : null}
       {openMenu ? (
         <NavMenu toggleMenu={handleOpenMenu} />
+      ) : openProfile ? (
+        <Profile toggleProfile={toggleProfile} />
+      ) : openHistory ? (
+        <History toggleHistory={toggleHistory} />
       ) : (
         <BottomNav toggleMenu={handleOpenMenu} />
       )}
@@ -179,6 +188,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// todo convert textinput to text
-// this is because this is not where we are recording user input

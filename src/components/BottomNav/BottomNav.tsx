@@ -4,7 +4,7 @@ import EntypoIcon from 'react-native-vector-icons/Entypo';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../themes/colors';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {View, StyleSheet, Pressable} from 'react-native';
 
 interface Props {
@@ -12,6 +12,7 @@ interface Props {
 }
 
 const BottomNav = ({toggleMenu}: Props) => {
+  const route = useRoute();
   const navigation = useNavigation();
   const canGoBack = navigation.canGoBack();
   const caretColor = canGoBack ? colors.white.light : '#6c757d';
@@ -32,12 +33,21 @@ const BottomNav = ({toggleMenu}: Props) => {
         }}>
         <Ionicon name="caret-forward" size={25} color={colors.white.light} />
       </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate('Home');
-        }}>
-        <AntDesignIcon name="plus" size={25} color={colors.white.light} />
-      </Pressable>
+      {route.name === 'Home' ? (
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Search');
+          }}>
+          <AntDesignIcon name="search1" size={25} color={colors.white.light} />
+        </Pressable>
+      ) : (
+        <Pressable
+          onPress={() => {
+            navigation.navigate('Home');
+          }}>
+          <AntDesignIcon name="plus" size={25} color={colors.white.light} />
+        </Pressable>
+      )}
       <MaterialIcon
         name="all-inclusive-box-outline"
         size={25}

@@ -91,6 +91,8 @@ const Signup = () => {
             placeholderTextColor="#adb5bd"
             style={styles.formInput}
             autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect={false}
             textContentType="none"
             onChangeText={text => {
               setUserInfo({
@@ -116,6 +118,8 @@ const Signup = () => {
               invalidEmail || emailAlreadyUsed ? styles.invalidEmail : {},
             ]}
             autoCapitalize="none"
+            autoComplete="off"
+            autoCorrect={false}
             textContentType="none"
             keyboardType="email-address"
             onChangeText={text => {

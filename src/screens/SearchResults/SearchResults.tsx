@@ -1,14 +1,8 @@
-import React, {useState} from 'react';
 import styles from './styles';
-import SearchBar from '../../components/SearchBar';
-import VideoResult from './components/VideoResult';
-import ImageResults from './components/ImageResults';
-import SearchResult from '../../components/SearchResult';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import Octicon from 'react-native-vector-icons/Octicons';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors} from '../../themes/colors';
+import React, {useEffect, useState} from 'react';
+import {useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 import {
   View,
@@ -17,46 +11,138 @@ import {
   Image,
   TextInput,
   Pressable,
+  ActivityIndicator,
 } from 'react-native';
 import Profile from '../../components/Profile';
+import TopNav from '../../components/TopNav';
+import axios from 'axios';
+import BottomNav from '../../components/BottomNav';
+import PageResult from './components/PageResult';
+import ImagesContainer from '../MediaViewer/components/ImagesContainer';
+import VideosContainer from '../MediaViewer/components/VideosContainer';
+import NavMenu from '../../components/BottomNav/components/NavMenu';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type CategoryProps = 'google' | 'permaweb' | 'images' | 'videos' | 'documents';
-
-interface ResultsProps {
-  category: CategoryProps;
+type CategoryProps = 'pages' | 'images' | 'videos' | 'documents';
+interface Transaction {
+  node: {
+    id: string;
+    tags: {
+      name: string;
+      value: string;
+    }[];
+    data: {
+      size: string;
+      type: string;
+    };
+  };
 }
-const GoogleResults = ({category}: ResultsProps) => {
-  return (
-    <>
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-      <SearchResult category={category} />
-    </>
-  );
-};
+
+interface SearchDataProps {
+  images: Transaction[];
+  videos: Transaction[];
+  pages: Transaction[];
+}
 
 const SearchResults = () => {
-  const navigation = useNavigation();
+  const route = useRoute();
+
+  const {text} = route.params;
+
+  const [openMenu, setOpenMenu] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
   const [currentCategory, setCurrentCategory] =
-    useState<CategoryProps>('google');
+    useState<CategoryProps>('pages');
 
-  const openNewTab = () => {
-    // for now just navigate home
-    navigation.navigate('Home');
+  const [searchInputText, setSearchInputText] = useState(text);
+  const [searchData, setSearchData] = useState<SearchDataProps>({
+    images: [],
+    videos: [],
+    pages: [],
+  });
+  const [loadingState, setLoadingState] = useState({
+    pages: false,
+    images: false,
+    videos: false,
+    documents: false,
+  });
+
+  useEffect(() => {
+    setSearchInputText(text);
+    fetchData(text);
+  }, [text]);
+
+  useEffect(() => {
+    fetchData(searchInputText);
+  }, [onSubmit]);
+
+  const onSubmit = async () => {
+    const userId = await AsyncStorage.getItem('user-id');
+
+    const addHistory = await axios.post(
+      'http://localhost:3000/api/add-history',
+      {
+        userId,
+        text: searchInputText,
+      },
+    );
+
+    const postRecentSearch = addHistory.data;
+
+    if (postRecentSearch.message === 'SUCCESSFUL') {
+      fetchData(searchInputText);
+    }
+  };
+
+  const fetchData = async (txt: string) => {
+    if (searchInputText) {
+      setLoadingState({
+        ...loadingState,
+        [currentCategory]: true,
+      });
+
+      try {
+        const response = await axios.post(
+          'http://localhost:3000/api/search-arweave',
+          {
+            text: txt,
+          },
+        );
+
+        const apiData = response.data;
+
+        if (apiData.message === 'SUCCESSFUL') {
+          setSearchData({
+            images: apiData.images,
+            videos: apiData.videos,
+            pages: apiData.pages,
+          });
+          setLoadingState({
+            ...loadingState,
+            [currentCategory]: false,
+          });
+        }
+      } catch (error) {
+        setLoadingState({
+          ...loadingState,
+          [currentCategory]: false,
+        });
+      }
+    }
   };
 
   const toggleProfile = () => {
     setOpenProfile(val => !val);
   };
 
+  const handleOpenMenu = () => {
+    setOpenMenu(!openMenu);
+  };
+
   return (
     <View style={styles.container}>
-      <SearchBar />
+      <TopNav navValue="arweave-search.goldsky.com?app=zod" />
 
       <ScrollView style={styles.contentArea}>
         <View style={styles.headerSection}>
@@ -74,38 +160,44 @@ const SearchResults = () => {
           </Pressable>
         </View>
 
-        <TextInput value="Search Bar" style={styles.searchBar} />
+        <TextInput
+          value={searchInputText}
+          style={styles.searchBar}
+          onChangeText={txt => {
+            setSearchInputText(txt);
+          }}
+          onSubmitEditing={onSubmit}
+          autoComplete="off"
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
         <IonIcon
           name="search-outline"
           size={24}
           color="#fff"
           style={styles.searchIcon}
         />
+        {searchInputText.length > 0 ? (
+          <MaterialIcons
+            name="cancel"
+            size={20}
+            color={colors.textGray}
+            style={styles.cancelIcon}
+            onPress={() => setSearchInputText('')}
+          />
+        ) : null}
 
         <View style={styles.resultCategories}>
           <Pressable
             onPress={() => {
-              setCurrentCategory('google');
+              setCurrentCategory('pages');
             }}>
-            {currentCategory === 'google' ? (
+            {currentCategory === 'pages' ? (
               <View style={styles.categoryWrapper}>
-                <Text style={styles.categoryActive}>Google</Text>
+                <Text style={styles.categoryActive}>Pages</Text>
               </View>
             ) : (
-              <Text style={styles.categoryText}>Google</Text>
-            )}
-          </Pressable>
-
-          <Pressable
-            onPress={() => {
-              setCurrentCategory('permaweb');
-            }}>
-            {currentCategory === 'permaweb' ? (
-              <View style={styles.categoryWrapper}>
-                <Text style={styles.categoryActive}>Permaweb</Text>
-              </View>
-            ) : (
-              <Text style={styles.categoryText}>Permaweb</Text>
+              <Text style={styles.categoryText}>Pages</Text>
             )}
           </Pressable>
 
@@ -134,68 +226,55 @@ const SearchResults = () => {
               <Text style={styles.categoryText}>Videos</Text>
             )}
           </Pressable>
-
-          <Pressable
-            onPress={() => {
-              setCurrentCategory('documents');
-            }}>
-            {currentCategory === 'documents' ? (
-              <View style={styles.categoryWrapper}>
-                <Text style={styles.categoryActive}>Documents</Text>
-              </View>
-            ) : (
-              <Text style={styles.categoryText}>Documents</Text>
-            )}
-          </Pressable>
         </View>
 
         <View>
-          {currentCategory === 'google' || currentCategory === 'permaweb' ? (
-            <GoogleResults category={currentCategory} />
+          {currentCategory === 'pages' ? (
+            <>
+              {loadingState.pages ? (
+                <View style={styles.loadingContainer}>
+                  <ActivityIndicator size="small" color="#fff" />
+                </View>
+              ) : (
+                <>
+                  {searchData.pages.map((data, index) => (
+                    <PageResult
+                      id={data.node.id}
+                      tags={data.node.tags}
+                      key={index}
+                    />
+                  ))}
+                </>
+              )}
+            </>
           ) : currentCategory === 'images' ? (
             <>
-              <ImageResults />
+              <ImagesContainer
+                data={searchData.images}
+                loadingData={loadingState.images}
+              />
             </>
           ) : currentCategory === 'videos' ? (
             <>
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
-              <VideoResult />
+              {searchData.videos.length === 0 ? (
+                <Text style={{color: '#fff'}}>No Results :/</Text>
+              ) : (
+                <VideosContainer
+                  data={searchData.videos}
+                  loadingData={loadingState.videos}
+                />
+              )}
             </>
           ) : null}
         </View>
       </ScrollView>
 
-      {openProfile ? (
+      {openMenu ? (
+        <NavMenu toggleMenu={handleOpenMenu} />
+      ) : openProfile ? (
         <Profile toggleProfile={toggleProfile} />
       ) : (
-        <View style={styles.bottomNav}>
-          <IonIcon name="caret-back" size={25} color={colors.white.light} />
-          <IonIcon name="caret-forward" size={25} color={colors.white.light} />
-          <Pressable onPress={openNewTab}>
-            <Octicon name="plus" size={25} color={colors.white.light} />
-          </Pressable>
-          <MaterialIcon
-            name="all-inclusive-box"
-            size={25}
-            color={colors.white.light}
-          />
-          <EntypoIcon
-            name="dots-three-horizontal"
-            size={25}
-            color={colors.white.light}
-          />
-        </View>
+        <BottomNav toggleMenu={handleOpenMenu} />
       )}
     </View>
   );

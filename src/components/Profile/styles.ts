@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   container: {
     height: '50%',
-    backgroundColor: colors.black.onboardScreen,
+    backgroundColor: '#131418',
   },
   areaContainer: {
     marginBottom: 15,

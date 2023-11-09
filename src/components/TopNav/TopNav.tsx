@@ -1,15 +1,22 @@
 import React from 'react';
 import {colors} from '../../themes/colors';
 import {View, StyleSheet, TextInput, Image} from 'react-native';
-
+import {useNavigation} from '@react-navigation/native';
 interface Props {
   navValue?: string;
 }
 const TopNav = ({navValue}: Props) => {
+  const navigation = useNavigation();
+
+  const navigateToSearch = () => {
+    navigation.push('Search');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
+          onPressIn={navigateToSearch}
           style={styles.searchBar}
           placeholder="Search or enter trasaction id"
           placeholderTextColor={colors.white.medium}

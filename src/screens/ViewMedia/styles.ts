@@ -4,6 +4,7 @@ import {colors} from '../../themes/colors';
 const styles = StyleSheet.create({
   backButton: {
     gap: 8,
+    width: 110,
     padding: 12,
     paddingVertical: 20,
     alignItems: 'center',
@@ -78,7 +79,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     paddingVertical: 4,
     color: colors.white.light,
-    // color: colors.blue.light,
   },
   loadingContainer: {
     flex: 1,

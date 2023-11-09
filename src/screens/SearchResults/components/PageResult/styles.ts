@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
-import {colors} from '../../themes/colors';
+import {colors} from '../../../../themes/colors';
 
 const styles = StyleSheet.create({
   container: {
     padding: 12,
-    backgroundColor: '#343a40',
     marginBottom: 7,
+    backgroundColor: '#343a40',
   },
   resultHeader: {
     flexDirection: 'row',
@@ -19,8 +19,10 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   resultIcon: {
-    padding: 6,
+    padding: 4,
     borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: colors.black.onboardScreen,
   },
   resultAddress: {
@@ -43,10 +45,9 @@ const styles = StyleSheet.create({
     gap: 6,
     alignItems: 'center',
   },
-  stampIcon: {},
   stampText: {
-    fontSize: 14.5,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
     color: colors.black.dark,
   },
   resultText: {
@@ -62,8 +63,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   tagsContainer: {
-    padding: 10,
-    marginTop: 10,
+    marginTop: 12,
   },
   tag: {
     marginRight: 10,
@@ -72,9 +72,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     borderColor: '#ced4da',
-    fontSize: 14,
-    fontWeight: '500',
+    flexDirection: 'row',
+  },
+  tagName: {
+    fontSize: 12,
     color: '#baebff',
+    fontWeight: '600',
+  },
+  tagValue: {
+    fontSize: 12,
+    color: '#baebff',
+    fontWeight: '600',
   },
 });
 

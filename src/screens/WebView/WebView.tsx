@@ -4,7 +4,7 @@ import {colors} from '../../themes/colors';
 import {WebView} from 'react-native-webview';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {View, TextInput, Image, StyleSheet} from 'react-native';
-import NavMenu from '../../components/BottomNav/components/Menu';
+import NavMenu from '../../components/BottomNav/components/NavMenu';
 import BottomNav from '../../components/BottomNav';
 
 const Webview = () => {
@@ -15,7 +15,7 @@ const Webview = () => {
   const {link} = route.params;
 
   const navigateToSearch = () => {
-    navigation.navigate('Search');
+    navigation.push('Search');
   };
 
   const handleOpenMenu = () => {

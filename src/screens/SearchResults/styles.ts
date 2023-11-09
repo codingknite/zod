@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   contentArea: {
-    backgroundColor: colors.black.secondary,
+    backgroundColor: colors.black.onboardScreen,
   },
   headerSection: {
     flexDirection: 'row',
@@ -41,8 +41,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 10,
     paddingLeft: 45,
-    fontWeight: '500',
     borderRadius: 32,
+    paddingRight: 38,
+    fontWeight: '500',
     alignSelf: 'center',
     color: colors.white.light,
     backgroundColor: colors.gray.light,
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 95,
     left: 23,
+  },
+  cancelIcon: {
+    position: 'absolute',
+    top: 97,
+    right: 20,
   },
   resultCategories: {
     gap: 12,
@@ -74,6 +80,12 @@ const styles = StyleSheet.create({
   testOverlap: {
     backgroundColor: 'orangered',
     height: '90%',
+  },
+  loadingContainer: {
+    height: '100%',
+    paddingVertical: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

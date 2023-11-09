@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
   mailIcon: {
     position: 'absolute',
-    top: 60,
+    top: 58,
     left: 15,
   },
   lockIcon: {
